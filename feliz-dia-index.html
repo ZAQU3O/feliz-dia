@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png" type="image/png">
+  <title>Mensagem Para Minha Querida Noiva</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to top right, #ffe0ec, #ffe8f0);
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Tela de parabéns */
+    .intro {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #ff4d79;
+      color: white;
+      font-size: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeOut 4s forwards;
+      z-index: 5;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    /* Cartão de mensagem */
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 400px;
+      z-index: 2;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: fadeInCard 1s forwards;
+      animation-delay: 4s;
+    }
+
+    .foto-container {
+      width: 200px;
+      height: 200px;
+      margin: 20px auto;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .foto-perfil {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center; /* foca mais no topo da imagem */
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    @keyframes fadeInCard {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .card h1 {
+      color: #ff4d79;
+    }
+
+    .card p {
+      color: #555;
+      font-size: 18px;
+    }
+
+    .hidden-message {
+      margin-top: 20px;
+      display: none;
+      color: #ff4d79;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #ff4d79;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff3366;
+    }
+
+    /* Música de fundo */
+    .music-control {
+      margin-top: 20px;
+      background-color: #ff4d79;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .music-control i {
+      margin-right: 10px;
+    }
+
+    /* Corações animados */
+    .heart {
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      position: absolute;
+      top: 100%;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+      transform: rotate(45deg);
+      border-radius: 50% 50% 0 50%;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    /* Fogos de artifício */
+    .firework {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background-color: #ff4d79;
+      border-radius: 50%;
+      animation: explode 1s ease-out forwards;
+      z-index: 1;
+    }
+
+    @keyframes explode {
+      to {
+        transform: scale(10);
+        opacity: 0;
+      }
+    }
+
+    /* Música de fundo */
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="intro" id="intro">
+  🎉 Parabéns para nós, meu amor! 🎉
+</div>
+
+<div class="card" id="card">
+  <h1>Feliz mais um mês, meu amor! ❤️</h1>
+  <p>Sou muito grato por cada momento ao seu lado.</p>
+  <div class="foto-container">
+    <img src="foto.jpg" alt="Foto nossa - Eu e você" class="foto-perfil">
+  </div>  
+  <button onclick="revealMessage()">Clique para ver mais</button>
+  <div class="hidden-message" id="hiddenMessage">
+    Que seja nós para sempre! 💖
+  </div>
+    <p>Te amo muito! 😘</p>
+</div>
+
+<!-- Música romântica de fundo -->
+<audio id="bgMusic" autoplay loop>
+  <source src="I Wonder.mp3" type="audio/mp3">
+  Seu navegador não suporta áudio HTML5.
+</audio>
+
+<script>
+  let musicPlaying = true;
+  const music = document.getElementById('bgMusic');
+  const musicControlButton = document.getElementById('musicControlButton');
+  const musicIcon = document.getElementById('musicIcon');
+  const musicText = document.getElementById('musicText');
+
+  // Função para iniciar e pausar a música
+  function toggleMusic() {
+    if (musicPlaying) {
+      music.pause();
+      musicIcon.className = 'fa fa-play';
+      musicText.innerHTML = 'Iniciar música';
+    } else {
+      music.play();
+      musicIcon.className = 'fa fa-pause';
+      musicText.innerHTML = 'Pausar música';
+    }
+    musicPlaying = !musicPlaying;
+  }
+
+  function revealMessage() {
+    document.getElementById('hiddenMessage').style.display = 'block';
+    launchFireworks();
+  }
+
+  // Criar corações subindo
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (5 + Math.random() * 3) + 's';
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 8000);
+  }, 500);
+
+  // Fogos de artifício
+  function launchFireworks() {
+    for (let i = 0; i < 30; i++) {
+      setTimeout(() => {
+        const firework = document.createElement('div');
+        firework.className = 'firework';
+        firework.style.left = Math.random() * window.innerWidth + 'px';
+        firework.style.top = Math.random() * window.innerHeight + 'px';
+        firework.style.backgroundColor = randomColor();
+        document.body.appendChild(firework);
+
+        setTimeout(() => {
+          firework.remove();
+        }, 1000);
+      }, i * 100);
+    }
+  }
+
+  function randomColor() {
+    const colors = ['#ff4d79', '#ffcc00', '#66ccff', '#ff66cc', '#99ff99'];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+</script>
+
+<!-- Adicionar Font Awesome para ícones -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+</html>
